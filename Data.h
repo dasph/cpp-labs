@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 
 class Data {
   private:
@@ -9,6 +10,7 @@ class Data {
 
   public:
     Data (int d = 1, int m = 1, int r = 2000);
+
     int Dzien () const;
     int Miesiac () const;
     int Rok () const;
@@ -16,4 +18,7 @@ class Data {
     void Wypisz () const;
     void Wpisz ();
     int Porownaj (const Data &wzor) const;
+    
+    friend std::ostream &operator<< (std::ostream &wy, const Data &d);
+    friend std::istream &operator>> (std::istream &we, Data &d);
 };

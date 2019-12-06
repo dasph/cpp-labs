@@ -1,13 +1,30 @@
-#include <iostream>
-#include <string.h>
 #include "Pracownik.h"
 
 using namespace std;
 
-Pracownik::Pracownik (const char *imie, const char *nazwisko, int d, int m, int r) {
+Pracownik::Pracownik (const char *imie, const char *nazwisko, int d, int m, int r) : m_nIDZatrudnienia(*(int *)this) {
   this->Imie(imie);
   this->Nazwisko(nazwisko);
   this->DataUrodzenia(d, m ,r);
+}
+
+Pracownik::Pracownik (const Pracownik &wzor) : m_nIDZatrudnienia(*(int *)&wzor) {
+  this->m_Imie = wzor.m_Imie;
+  this->m_Nazwisko = wzor.m_Nazwisko;
+  this->m_DataUrodzenia = wzor.m_DataUrodzenia;
+}
+
+Pracownik &Pracownik::operator= (const Pracownik &wzor) {
+  if (this == &wzor) return *this;
+
+  this->~Pracownik();
+  new (this) Pracownik(wzor);
+  
+  return *this;
+}
+
+bool Pracownik::operator== (const Pracownik &wzor) const {
+  return this->Porownaj(wzor) == 0;
 }
 
 const char *Pracownik::Imie () const {
@@ -39,11 +56,9 @@ void Pracownik::Wypisz () const {
 }
 
 void Pracownik::Wpisz () {
-  cout << "Enter workers name: ";
+  cout << "> Enter workers name, surname and date of birth: ";
   this->m_Imie.Wpisz();
-  cout << "Enter workers surname: ";
   this->m_Nazwisko.Wpisz();
-  cout << "Enter workers date of birth: \n";
   this->m_DataUrodzenia.Wpisz();
 }
 
@@ -68,4 +83,12 @@ int Pracownik::Porownaj (const Pracownik &wzorzec) const {
 
   int data = this->m_DataUrodzenia.Porownaj(wzorzec.m_DataUrodzenia);
   return data;
+}
+
+ostream &operator<< (ostream &wy, const Pracownik &p) {
+  return wy << p.m_Imie << "        " << p.m_Nazwisko << "        " << p.m_DataUrodzenia;
+}
+
+istream &operator>> (istream &we, Pracownik &p) {
+  return we >> p.m_Imie >> p.m_Nazwisko >> p.m_DataUrodzenia;
 }

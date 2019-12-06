@@ -1,11 +1,36 @@
-#include <iostream>
 #include <string.h>
 #include "Napis.h"
 
 using namespace std;
 
 Napis::Napis (const char *napis) {
-  this->Ustaw(napis);
+  this->m_nDl = strlen(napis);
+  this->m_pszNapis = new char[this->m_nDl];
+  strcpy(this->m_pszNapis, napis);
+}
+
+Napis::Napis (const Napis &wzor) {
+  this->m_nDl = wzor.m_nDl;
+  this->m_pszNapis = new char[this->m_nDl];
+  strcpy(this->m_pszNapis, wzor.m_pszNapis);
+}
+
+Napis::~Napis () {
+  this->m_nDl = -1;
+  delete[] this->m_pszNapis;
+}
+
+Napis &Napis::operator= (const Napis &wzor) {
+  delete[] this->m_pszNapis;
+  this->m_nDl = wzor.m_nDl;
+  this->m_pszNapis = new char[this->m_nDl];
+  strcpy(this->m_pszNapis, wzor.m_pszNapis);
+
+  return *this;
+}
+
+bool Napis::operator== (const Napis &wzor) const {
+  return strcmp(this->m_pszNapis, wzor.m_pszNapis) == 0;
 }
 
 const char *Napis::Zwroc () const {
@@ -13,7 +38,10 @@ const char *Napis::Zwroc () const {
 }
 
 void Napis::Ustaw (const char *nowy_napis) {
-  strncpy(this->m_pszNapis, nowy_napis, sizeof(this->m_pszNapis) - 1);
+  delete[] this->m_pszNapis;
+  this->m_nDl = strlen(nowy_napis);
+  this->m_pszNapis = new char[this->m_nDl];
+  strcpy(this->m_pszNapis, nowy_napis);
 }
 
 void Napis::Wypisz () const {
@@ -21,12 +49,27 @@ void Napis::Wypisz () const {
 }
 
 void Napis::Wpisz () {
-  char tmp[256];
+  char buf[256];
+  cin.width(256);
+  cin >> buf;
 
-  cin >> tmp;
-  this->Ustaw(tmp);
+  this->Ustaw(buf);
 }
 
 int Napis::SprawdzNapis (const char *por_napis) const {
   return strcmp(this->m_pszNapis, por_napis);
+}
+
+ostream &operator<< (ostream &wy, const Napis &p) {
+  return wy << p.m_pszNapis;
+}
+
+istream &operator>> (istream &we, Napis &p) {
+  char buf[256];
+  we.width(256);
+  we >> buf;
+
+  p.Ustaw(buf);
+
+  return we;
 }

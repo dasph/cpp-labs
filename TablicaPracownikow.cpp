@@ -1,5 +1,7 @@
 #include "TablicaPracownikow.h"
 
+using namespace std;
+
 TablicaPracownikow::TablicaPracownikow () {
   this->m_nLiczbaPracownikow = 0;
 }
@@ -66,3 +68,20 @@ const Pracownik *TablicaPracownikow::Szukaj (const Data &wzorzec) const {
   return nullptr;
 }
 
+ostream &operator<< (ostream &wy, const TablicaPracownikow &t) {
+  for (int i = 0; i < t.m_nLiczbaPracownikow; i++) wy << t.m_pTablica[i];
+  
+  return wy;
+}
+
+istream &operator>> (istream &we, TablicaPracownikow &t) {
+  Pracownik p;
+  
+  while (we.peek() != -1) {
+    we >> p;
+    t.Dodaj(p);
+    we.ignore();
+  }
+
+  return we;
+}

@@ -1,16 +1,14 @@
-#include <iostream>
+#include <fstream>
 #include "TablicaPracownikow.h"
 
 using namespace std;
 
 void help () {
-  cout << "\nPease select a function:\n"
-       << "\ta - add new worker\n"
-       << "\tr - remove a worker\n"
-       << "\tp - print all workers\n"
-       << "\ts - search for a worker by name/surname\n"
-       << "\tS - search for a worker by dob\n"
-       << "\tq - quit\n"
+  cout << "\nPease select a function:\n\t"
+       << "a - add new worker\t\t\t"            << "r - remove a worker\n\t"
+       << "S - search for a worker by dob\t\t"  << "s - search for a worker by name/surname\n\t"
+       << "i - import workers from a file\t\t"  << "e - export workers to a file\n\t"
+       << "p - print all workers\t\t\t"         << "q - quit\n"
        << "> Selected function: ";
 }
 
@@ -21,7 +19,7 @@ int main (int argc, char **argv) {
   while (c != 'q') {
     switch (c) {
       case 'a': {
-        Pracownik tmp = Pracownik();
+        Pracownik tmp;
         tmp.Wpisz();
         workers.Dodaj(tmp);
         cout << "< New worker has been added:\n";
@@ -29,8 +27,8 @@ int main (int argc, char **argv) {
       } break;
 
       case 'r': {
-        char name[40];
-        char surname[40];
+        char name[64];
+        char surname[64];
 
         cout << "> Please enter worker\'s name and surname: ";
         cin >> name >> surname;
@@ -46,14 +44,13 @@ int main (int argc, char **argv) {
       } break;
 
       case 'p': {
-        cout << "List of all workers:\n";
-        workers.WypiszPracownikow();
+        cout << "List of all workers:\n" << workers;
       } break;
 
       case 's':
       case 'S': {
-        char name[40];
-        char surname[40];
+        char name[64];
+        char surname[64];
         Data date;
 
         cout << "> Please enter worker\'s ";
@@ -61,8 +58,8 @@ int main (int argc, char **argv) {
           cout << "name and surname: ";
           cin >> name >> surname;
         } else {
-          cout << "date of birth:\n  ";
-          date.Wpisz();
+          cout << "date of birth: ";
+          cin >> date;
         }
 
         const Pracownik *worker = c == 's' ? workers.Szukaj(surname, name) : workers.Szukaj(date);
@@ -71,8 +68,36 @@ int main (int argc, char **argv) {
           break;
         }
 
-        cout << "< Info about " << name << ' ' << surname << ":\n";
-        worker->Wypisz();
+        cout << "< Info about " << worker->Imie() << ' ' << worker->Nazwisko() << ":\n" << *worker;
+      } break;
+
+      case 'e': {
+        char filename[64];
+        cout << "> Enter output file\'s name: ";
+        cin >> filename;
+
+        ofstream file(filename);
+        file << workers;
+        file.close();
+
+        cout << "< List of workers has been successfully exported to " << filename << '\n';
+      } break;
+
+      case 'i': {
+        char filename[64];
+        cout << "> Enter input file\'s name: ";
+        cin >> filename;
+
+        ifstream file(filename);
+        if (!file.good()) {
+          cout << "< File doesn\'t exist!\n";
+          break;
+        }
+
+        file >> workers;
+
+        cout << "< List of workers has been successfully imported from " << filename << '\n';
+        file.close();
       }
     }
 

@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Data.h"
 
 using namespace std;
@@ -33,8 +32,6 @@ void Data::Wypisz () const {
 
 void Data::Wpisz () {
   int d, m, r;
-
-  cout << "Enter day/month/year: ";
   cin >> d >> m >> r;
 
   this->Ustaw(d, m, r);
@@ -57,4 +54,19 @@ int Data::Porownaj (const Data &wzor) const {
   int b = wzor.m_nRok * 10000 + wzor.m_nMiesiac * 100 + wzor.m_nDzien;
 
   return a == b ? 0 : a > b ? 1 : -1;
+}
+
+ostream &operator<< (ostream &wy, const Data &d) {
+  return wy << d.m_nDzien << '-' << d.m_nMiesiac << '-' << d.m_nRok << '\n';
+}
+
+istream &operator>> (istream &we, Data &d) {
+  char c;
+
+  if (&we == &cin) we >> d.m_nDzien >> d.m_nMiesiac >> d.m_nRok;
+  else we >> d.m_nDzien >> c >> d.m_nMiesiac >> c >> d.m_nRok;
+
+  d.Koryguj();
+  
+  return we;
 }
