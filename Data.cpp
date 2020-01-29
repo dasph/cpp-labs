@@ -57,7 +57,7 @@ int Data::Porownaj (const Data &wzor) const {
 }
 
 ostream &operator<< (ostream &wy, const Data &d) {
-  return wy << d.m_nDzien << '-' << d.m_nMiesiac << '-' << d.m_nRok << '\n';
+  return wy << d.m_nDzien << '-' << d.m_nMiesiac << '-' << d.m_nRok;
 }
 
 istream &operator>> (istream &we, Data &d) {

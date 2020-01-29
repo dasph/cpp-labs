@@ -44,7 +44,6 @@ void TablicaPracownikow::Usun (const Pracownik &wzorzec) {
   this->m_pTablica[this->m_nLiczbaPracownikow] = Pracownik();
 }
 
-
 void TablicaPracownikow::WypiszPracownikow () const {
   for (int i = 0; i < this->m_nLiczbaPracownikow; i++) {
     this->m_pTablica[i].Wypisz();
@@ -69,7 +68,7 @@ const Pracownik *TablicaPracownikow::Szukaj (const Data &wzorzec) const {
 }
 
 ostream &operator<< (ostream &wy, const TablicaPracownikow &t) {
-  for (int i = 0; i < t.m_nLiczbaPracownikow; i++) wy << t.m_pTablica[i];
+  for (int i = 0; i < t.m_nLiczbaPracownikow; i++) wy << t.m_pTablica[i] << '\n';
   
   return wy;
 }

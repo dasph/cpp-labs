@@ -12,13 +12,14 @@ class Pracownik {
   public:
     Pracownik (const char *im = "", const char *naz = "", int d = 1, int m = 1, int r = 2000);
     Pracownik (const Pracownik &wzor);
-    ~Pracownik () {};
+    virtual ~Pracownik () {};
 
     Pracownik &operator= (const Pracownik &wzor);
     bool operator== (const Pracownik &wzor) const;
 
     const char *Imie () const;
     const char *Nazwisko () const;
+    Data DataUrodzenia () const;
     void Imie (const char *nowe_imie);
     void Nazwisko (const char *nowe_nazwisko);
     void DataUrodzenia (int nowy_dzien, int nowy_miesiac, int nowy_rok);
@@ -28,6 +29,9 @@ class Pracownik {
     int SprawdzNazwisko (const char *por_nazwisko) const;
     int SprawdzDate (const Data &por_data) const;
     int Porownaj (const Pracownik &wzorzec) const;
+
+    virtual void WypiszDane () const;
+    virtual Pracownik *KopiaObiektu ();
 
     friend std::ostream &operator<< (std::ostream &wy, const Pracownik &p);
     friend std::istream &operator>> (std::istream &we, Pracownik &p);

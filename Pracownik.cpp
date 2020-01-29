@@ -2,13 +2,13 @@
 
 using namespace std;
 
-Pracownik::Pracownik (const char *imie, const char *nazwisko, int d, int m, int r) : m_nIDZatrudnienia(*(int *)this) {
+Pracownik::Pracownik (const char *imie, const char *nazwisko, int d, int m, int r) : m_nIDZatrudnienia(reinterpret_cast<long>(this) & 0xffffffff) {
   this->Imie(imie);
   this->Nazwisko(nazwisko);
   this->DataUrodzenia(d, m ,r);
 }
 
-Pracownik::Pracownik (const Pracownik &wzor) : m_nIDZatrudnienia(*(int *)&wzor) {
+Pracownik::Pracownik (const Pracownik &wzor) : m_nIDZatrudnienia(reinterpret_cast<long>(this) & 0xffffffff) {
   this->m_Imie = wzor.m_Imie;
   this->m_Nazwisko = wzor.m_Nazwisko;
   this->m_DataUrodzenia = wzor.m_DataUrodzenia;
@@ -35,6 +35,10 @@ const char *Pracownik::Nazwisko () const {
   return this->m_Nazwisko.Zwroc();
 }
 
+Data Pracownik::DataUrodzenia () const {
+  return this->m_DataUrodzenia;
+}
+
 void Pracownik::Imie (const char *nowe_imie) {
   this->m_Imie.Ustaw(nowe_imie);
 }
@@ -48,11 +52,10 @@ void Pracownik::DataUrodzenia (int nowy_dzien, int nowy_miesiac, int nowy_rok) {
 }
 
 void Pracownik::Wypisz () const {
-  this->m_Imie.Wypisz();
-  cout << "        ";
-  this->m_Nazwisko.Wypisz();
-  cout << "        ";
-  this->m_DataUrodzenia.Wypisz();
+  cout << "\n    > ID:\t\t\t" << this->m_nIDZatrudnienia
+       << "\n    > Name:\t\t\t" << this->m_Imie
+       << "\n    > Surname:\t\t\t" << this->m_Nazwisko
+       << "\n    > Date of Birth:\t\t" << this->m_DataUrodzenia;
 }
 
 void Pracownik::Wpisz () {
@@ -85,8 +88,18 @@ int Pracownik::Porownaj (const Pracownik &wzorzec) const {
   return data;
 }
 
+void Pracownik::WypiszDane () const {
+  cout << "Worker\'s data:";
+  this->Wypisz();
+}
+
+Pracownik *Pracownik::KopiaObiektu () {
+  // TODO: ?
+  return this;
+}
+
 ostream &operator<< (ostream &wy, const Pracownik &p) {
-  return wy << p.m_Imie << "        " << p.m_Nazwisko << "        " << p.m_DataUrodzenia;
+  return wy << p.m_nIDZatrudnienia << "\t\t" << p.m_Imie << "\t\t" << p.m_Nazwisko << "\t\t" << p.m_DataUrodzenia;
 }
 
 istream &operator>> (istream &we, Pracownik &p) {

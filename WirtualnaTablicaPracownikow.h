@@ -1,13 +1,15 @@
 #pragma once
 #include "Pracownik.h"
 
-class TablicaPracownikow {
+class WirtualnaTablicaPracownikow {
   private:
-    Pracownik m_pTablica[20];
+    Pracownik **tablica;
     int m_nLiczbaPracownikow {};
+    int m_nRozmiarTablicy {};
 
   public:
-    TablicaPracownikow ();
+    WirtualnaTablicaPracownikow (int roz);
+    ~WirtualnaTablicaPracownikow ();
     
     void Dodaj (const Pracownik &p);
     void Usun (const Pracownik &wzorzec);
@@ -16,6 +18,6 @@ class TablicaPracownikow {
     const Pracownik *Szukaj (const char *nazwisko, const char *imie) const;
     const Pracownik *Szukaj (const Data &wzorzec) const;
 
-    friend std::ostream &operator<< (std::ostream &wy, const TablicaPracownikow &t);
-    friend std::istream &operator>> (std::istream &we, TablicaPracownikow &t);
+    friend std::ostream &operator<< (std::ostream &wy, const WirtualnaTablicaPracownikow &t);
+    friend std::istream &operator>> (std::istream &we, WirtualnaTablicaPracownikow &t);
 };

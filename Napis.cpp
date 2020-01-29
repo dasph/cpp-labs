@@ -5,13 +5,13 @@ using namespace std;
 
 Napis::Napis (const char *napis) {
   this->m_nDl = strlen(napis);
-  this->m_pszNapis = new char[this->m_nDl];
+  this->m_pszNapis = new char[this->m_nDl + 1];
   strcpy(this->m_pszNapis, napis);
 }
 
 Napis::Napis (const Napis &wzor) {
   this->m_nDl = wzor.m_nDl;
-  this->m_pszNapis = new char[this->m_nDl];
+  this->m_pszNapis = new char[this->m_nDl + 1];
   strcpy(this->m_pszNapis, wzor.m_pszNapis);
 }
 
@@ -23,7 +23,7 @@ Napis::~Napis () {
 Napis &Napis::operator= (const Napis &wzor) {
   delete[] this->m_pszNapis;
   this->m_nDl = wzor.m_nDl;
-  this->m_pszNapis = new char[this->m_nDl];
+  this->m_pszNapis = new char[this->m_nDl + 1];
   strcpy(this->m_pszNapis, wzor.m_pszNapis);
 
   return *this;
@@ -40,7 +40,7 @@ const char *Napis::Zwroc () const {
 void Napis::Ustaw (const char *nowy_napis) {
   delete[] this->m_pszNapis;
   this->m_nDl = strlen(nowy_napis);
-  this->m_pszNapis = new char[this->m_nDl];
+  this->m_pszNapis = new char[this->m_nDl + 1];
   strcpy(this->m_pszNapis, nowy_napis);
 }
 

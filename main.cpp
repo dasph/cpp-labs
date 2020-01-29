@@ -22,8 +22,7 @@ int main (int argc, char **argv) {
         Pracownik tmp;
         tmp.Wpisz();
         workers.Dodaj(tmp);
-        cout << "< New worker has been added:\n";
-        tmp.Wypisz();
+        cout << "< New worker has been added:\n" << tmp;
       } break;
 
       case 'r': {
