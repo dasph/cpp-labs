@@ -94,8 +94,7 @@ void Pracownik::WypiszDane () const {
 }
 
 Pracownik *Pracownik::KopiaObiektu () {
-  // TODO: ?
-  return this;
+  return new Pracownik(*this);
 }
 
 ostream &operator<< (ostream &wy, const Pracownik &p) {

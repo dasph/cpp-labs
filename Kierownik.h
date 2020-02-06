@@ -13,7 +13,7 @@ class Kierownik : public Pracownik {
     bool operator== (const Kierownik &wzor) const;
 
     virtual void WypiszDane () const;
-    virtual Pracownik *KopiaObiektu ();
+    virtual Kierownik *KopiaObiektu ();
 
     friend std::ostream &operator<< (std::ostream &wy, const Kierownik &s);
     friend std::istream &operator>> (std::istream &we, Kierownik &s);

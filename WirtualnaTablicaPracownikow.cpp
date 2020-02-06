@@ -27,10 +27,8 @@ void WirtualnaTablicaPracownikow::Dodaj (const Pracownik &p) {
   int n = this->m_nLiczbaPracownikow > this->m_nRozmiarTablicy - 1
     ? this->m_nRozmiarTablicy - 1 : this->m_nLiczbaPracownikow;
   
-  // BUG: i + 1 element gets overwritten!
   for (; i < n; n--) this->tablica[n] = this->tablica[n - 1];
 
-  delete this->tablica[i];
   this->tablica[i] = new Pracownik(p);
   this->m_nLiczbaPracownikow = this->m_nLiczbaPracownikow < this->m_nRozmiarTablicy
     ? this->m_nLiczbaPracownikow + 1 : this->m_nRozmiarTablicy;

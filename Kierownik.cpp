@@ -34,9 +34,8 @@ void Kierownik::WypiszDane () const {
        << "\n    > Number of employees:\t" << this->m_nLiczbaPracownikow << '\n';
 }
 
-Pracownik *Kierownik::KopiaObiektu () {
-  // TODO: ?
-  return this;
+Kierownik *Kierownik::KopiaObiektu () {
+  return new Kierownik(*this);
 }
 
 ostream &operator<< (ostream &wy, const Kierownik &s) {

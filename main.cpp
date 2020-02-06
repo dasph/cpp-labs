@@ -1,5 +1,5 @@
 #include <fstream>
-#include "TablicaPracownikow.h"
+#include "WirtualnaTablicaPracownikow.h"
 
 using namespace std;
 
@@ -14,7 +14,7 @@ void help () {
 
 int main (int argc, char **argv) {
   char c = '\0';
-  TablicaPracownikow workers;
+  WirtualnaTablicaPracownikow workers(20);
 
   while (c != 'q') {
     switch (c) {
